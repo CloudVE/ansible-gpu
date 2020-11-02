@@ -1,0 +1,8 @@
+[gpu]
+3.89.44.159
+
+[all:vars]
+ansible_ssh_port=22
+ansible_user=ubuntu
+ansible_ssh_private_key_file=kp
+ansible_ssh_extra_args='-o StrictHostKeyChecking=no'

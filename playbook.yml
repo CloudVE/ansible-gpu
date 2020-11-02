@@ -1,0 +1,26 @@
+---
+# Setup drivers and Docker for a GPU instance
+- hosts: gpu
+  become: true
+  tasks:
+    - name: Install Nvidia drivers
+      include_role:
+          name: nvidia_driver
+
+    - name: Check if Docker is installed
+      command: docker
+      register: docker_installed
+      ignore_errors: true
+
+    - name: Install Docker
+      include_role:
+        name: docker
+      vars:
+        docker_users:
+          - ubuntu
+        docker_install_compose: false
+      when: "docker_installed is failed"
+
+    - name: Install Nvidia Docker
+      include_role:
+          name: nvidia_docker
