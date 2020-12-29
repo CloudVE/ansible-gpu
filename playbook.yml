@@ -7,20 +7,22 @@
       include_role:
           name: nvidia_driver
 
-    - name: Check if Docker is installed
-      command: docker
-      register: docker_installed
-      ignore_errors: true
-
-    - name: Install Docker
-      include_role:
-        name: docker
-      vars:
-        docker_users:
-          - ubuntu
-        docker_install_compose: false
-      when: "docker_installed is failed"
-
     - name: Install Nvidia Docker
       include_role:
           name: nvidia_docker
+
+    - name: Make sure containerd config folder exists
+      file:
+        path: /var/lib/rancher/rke2/agent/etc/containerd
+        state: directory
+
+    # ref: https://dev.to/mweibel/add-nvidia-gpu-support-to-k3s-with-containerd-4j17
+    - name: Place containerd config
+      copy:
+        src: config.toml.tmpl
+        dest: /var/lib/rancher/rke2/agent/etc/containerd/config.toml.tmpl
+
+    - name: Restart rke
+      systemd:
+        state: restarted
+        name: "rke2-agent"

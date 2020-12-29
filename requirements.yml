@@ -1,5 +1,3 @@
-- src: https://github.com/geerlingguy/ansible-role-docker
-  name: docker
 - src: https://github.com/NVIDIA/ansible-role-nvidia-driver
   name: nvidia_driver
 - src: https://github.com/NVIDIA/ansible-role-nvidia-docker
