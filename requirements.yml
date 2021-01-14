@@ -1,4 +1,2 @@
 - src: https://github.com/NVIDIA/ansible-role-nvidia-driver
   name: nvidia_driver
-- src: https://github.com/NVIDIA/ansible-role-nvidia-docker
-  name: nvidia_docker
